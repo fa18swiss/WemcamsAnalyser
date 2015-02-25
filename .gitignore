@@ -1,3 +1,4 @@
 /*.pyc
 /Webcam/Images/*.jpg
 /Images/*
+__pycache__/
