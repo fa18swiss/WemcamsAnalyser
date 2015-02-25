@@ -3,10 +3,19 @@ import Config
 from os.path import join
 
 class Result:
-    def __init__(self):
-        #self.
-        pass
+    def __init__(self, state, image):
+        self.__state = state
+        self.__image = image
+    def state(self):
+        return self.__state
+    def image(self):
+        return self.__image
 
+class State:
+    Unknown = 0
+    Night = 1
+    Sun = 2
+    Cloudy = 3
 
 class Image:
     def __init__(self, name):
@@ -33,14 +42,14 @@ images = [Image(f) for f in files][:24]
 import cv2
 import numpy as np
 
-for image in [i for i in images if i.webcam().name()=="LSPL_east"]:
+results = []
+
+for image in [i for i in images if i.webcam().name()=="LSZB"]:
     img = cv2.imread(image.fullPath())
     webcam = image.webcam()
     height, width  = img.shape[:2]
     print("%d x %d" % (height, width))
-    #crop = img[0:image.webcam().ignoreTop(), width:image.webcam().ignoreBottom()]
-    #im[y1:y2, x1:x2]
-    #crop = img[]
+
     cv2.imshow("ori" + repr(image), img)
     bottom = webcam.ignoreBottom() if webcam.ignoreBottom() != 0 else height
     top = webcam.ignoreTop()
@@ -50,8 +59,6 @@ for image in [i for i in images if i.webcam().name()=="LSPL_east"]:
     bottomSky = maxSkyHeight - top
     print("top %d, bot %d" %(top, bottom))
     print("skyLeft(%d), skyRight(%d), maxSkyHeight(%d)" % (skyLeft, skyRight, maxSkyHeight))
-    #crop = img[webcam.ignoreTop():bottom, 0:width]
-    #cv2.imshow("crop"+repr(image), crop)
     pts1 = np.float32([[0,top],[width,top],[0,skyLeft],[width,skyRight]])
     pts2 = np.float32([[0,0],[width,0],[0,bottomSky],[width,bottomSky]])
     M = cv2.getPerspectiveTransform(pts1,pts2)
@@ -67,7 +74,5 @@ for image in [i for i in images if i.webcam().name()=="LSPL_east"]:
     M = cv2.getPerspectiveTransform(pts1,pts2)
     ground = cv2.warpPerspective(img,M,(width,heightGround))
     cv2.imshow("ground" + repr(image), ground)
-
-    #img.he
 
 cv2.waitKey()

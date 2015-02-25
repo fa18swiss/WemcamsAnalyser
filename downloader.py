@@ -5,4 +5,8 @@ import Config
 
 todayStr = ("{:" + Config.dateFormat + "}").format(datetime.today())
 for webcam in Config.webcams:
-    urllib.urlretrieve(webcam.url(), "Webcam/Images/%s_%s.jpg" % (todayStr, webcam.name()))
+    try:
+        urllib.urlretrieve(webcam.url(), "%s/%s_%s.jpg" % (Config.pathImages, todayStr, webcam.name()))
+    except:
+        pass
+import Move

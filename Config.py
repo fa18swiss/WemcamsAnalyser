@@ -37,16 +37,16 @@ class Webcam:
         return "Webcam '%s'" % self.__name
 
 webcams = [
-    Webcam("LSGC_east" , "http://www.leseplaturesairport.ch/site/images/stories/webcam/LSGC1.jpg"    , 381, 366, 8),
-    Webcam("LSGC_west" , "http://www.leseplaturesairport.ch/site/images/stories/webcam/LSGC3.jpg"    , 30, 30),
-    Webcam("LSGN_east" , "http://www.neuchatel-airport.ch/webcams/lsgn_east.jpg"                     , 30, 30),
-    Webcam("LSGN_west" , "http://www.neuchatel-airport.ch/webcams/lsgn_west.jpg"                     , 30, 30),
-    Webcam("LSGL_north", "http://www.lausanne-airport.ch/webcam0/last/webcam002.jpg"                 , 30, 30),
-    Webcam("LSGL_south", "http://www.lausanne-airport.ch/webcam2/last/webcam000M.jpg"                , 30, 30),
-    Webcam("LSZQ_west" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/ouest.jpg", 30, 30),
-    Webcam("LSZQ_east" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/est.jpg"  , 30, 30),
+    Webcam("LSGC_east" , "http://www.leseplaturesairport.ch/site/images/stories/webcam/LSGC1.jpg"    , 381, 366,  8),
+    Webcam("LSGC_west" , "http://www.leseplaturesairport.ch/site/images/stories/webcam/LSGC3.jpg"    , 276, 287,  8),
+    Webcam("LSGN_east" , "http://www.neuchatel-airport.ch/webcams/lsgn_east.jpg"                     ,   0,   0),
+    Webcam("LSGN_west" , "http://www.neuchatel-airport.ch/webcams/lsgn_west.jpg"                     ,   0,   0),
+    Webcam("LSGL_north", "http://www.lausanne-airport.ch/webcam0/last/webcam002.jpg"                 ,   0,   0),
+    Webcam("LSGL_south", "http://www.lausanne-airport.ch/webcam2/last/webcam000M.jpg"                ,   0,   0),
+    Webcam("LSZQ_west" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/ouest.jpg",   0,   0),
+    Webcam("LSZQ_east" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/est.jpg"  ,   0,   0),
     Webcam("LSPL_east" , "http://aecs.lspl.ch/fileadmin/webcams/cam05_large.jpg"                     , 130, 215, 20),
-    Webcam("LSPL_west" , "http://aecs.lspl.ch/fileadmin/webcams/cam23_large.jpg"                     , 30, 30),
-    Webcam("LSZB"      , "http://www.flughafenbern.ch/images/webcam/current.jpg"                     , 30, 30, 8, 448),
-    Webcam("LSZJ"      , "http://www.gamcy.ch/MOBOTIX/Courtelary-cam1.jpg"                           , 30, 30),
+    Webcam("LSPL_west" , "http://aecs.lspl.ch/fileadmin/webcams/cam23_large.jpg"                     , 217, 153, 20),
+    Webcam("LSZB"      , "http://www.flughafenbern.ch/images/webcam/current.jpg"                     , 121, 108,  8, 448),
+    Webcam("LSZJ"      , "http://www.gamcy.ch/MOBOTIX/Courtelary-cam1.jpg"                           ,   0,   0),
 ]
