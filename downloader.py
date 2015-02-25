@@ -2,7 +2,6 @@ import urllib
 from datetime import datetime
 import Config
 
-
 todayStr = ("{:" + Config.dateFormat + "}").format(datetime.today())
 for webcam in Config.webcams:
     try:
