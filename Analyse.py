@@ -33,9 +33,6 @@ class Image:
     def __repr__(self):
         return "Image path=%s, date=%s, webcam=%s" % (self.__name, self.__date, self.__webcam)
 
-
-
-
 files = Config.filesInFolder(Config.pathImages, True)
 images = [Image(f) for f in files][:24]
 
