@@ -1,7 +1,5 @@
-__author__ = 'Jules'
 
 import Config
-
 
 files = Config.filesInFolder(Config.pathImages, True)
 dates = {}

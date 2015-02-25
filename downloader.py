@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+
 import urllib
 from datetime import datetime
 import Config
@@ -8,4 +10,6 @@ for webcam in Config.webcams:
         urllib.urlretrieve(webcam.url(), "%s/%s_%s.jpg" % (Config.pathImages, todayStr, webcam.name()))
     except:
         pass
+
 import Move
+Move.main()
