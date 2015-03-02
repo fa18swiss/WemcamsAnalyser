@@ -1,5 +1,14 @@
 dateFormat = "%Y-%m-%d_%H%M"
+#default path
 pathImages = r"E:\\WebcamsImages\\"
+# path for hostname
+pathsImage = {
+    "think-jules": r"E:\\WebcamsImages\\stample",
+    "banana-black": r"/home/jules/Webcams/Images",
+}
+import platform
+if platform.node() in pathsImage:
+    pathImages = pathsImage[platform.node()]
 
 from os import listdir
 from os.path import isfile, join
