@@ -49,4 +49,5 @@ webcams = [
     Webcam("LSPL_west" , "http://aecs.lspl.ch/fileadmin/webcams/cam23_large.jpg"                     , 217, 153, 20),
     Webcam("LSZB"      , "http://www.flughafenbern.ch/images/webcam/current.jpg"                     , 121, 108,  8, 448),
     Webcam("LSZJ"      , "http://www.gamcy.ch/MOBOTIX/Courtelary-cam1.jpg"                           ,   0,   0),
+    Webcam("StImier"   , "http://www.chasseral-snow.ch/photo/camerapts0800-5.jpg"                    ,   0,   0),
 ]
