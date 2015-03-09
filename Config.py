@@ -11,13 +11,18 @@ if platform.node() in pathsImage:
     pathImages = pathsImage[platform.node()]
 
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, isdir
 
-
+#[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}_[A-Za-z_]{4,}.jpg
 
 def filesInFolder(path, sort=False):
-
     files = [f for f in listdir(path) if isfile(join(path, f))]
+    if sort:
+        files.sort()
+    return files
+
+def folderInFolder(path, sort=False):
+    files = [f for f in listdir(path) if isdir(join(path, f))]
     if sort:
         files.sort()
     return files
