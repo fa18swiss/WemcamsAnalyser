@@ -13,11 +13,7 @@ class Result:
     def image(self):
         return self.__image
 
-class State:
-    Unknown = 0
-    Night = 1
-    Sun = 2
-    Cloudy = 3
+
 
 class Image:
     def __init__(self, name):
