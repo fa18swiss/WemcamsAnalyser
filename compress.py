@@ -4,6 +4,7 @@ def main():
     import Config
     import os, os.path
     import subprocess
+    import datetime
 
     folders = Config.folderInFolder(Config.pathImages, True)
 
@@ -11,8 +12,8 @@ def main():
     if not os.path.exists(workDir):
         os.makedirs(workDir)
 
-
-    print(workDir)
+    todayStr = ("{:" + Config.dateOnlyFormat + "}").format(datetime.today())
+    print("todayStr")
     for f in folders:
         path = os.path.join(Config.pathImages, f)
         tar = "%s.tar" % f

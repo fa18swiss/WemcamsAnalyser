@@ -1,5 +1,7 @@
 import datetime
 import Config
+import Characteristic
+
 from os.path import join
 
 class Result:
@@ -41,7 +43,7 @@ import numpy as np
 
 results = []
 
-for image in [i for i in images if i.webcam().name()=="LSZB"]:
+for image in [i for i in images if i.webcam().name()=="LSGC_east" and i.date().hour == 13]:
     img = cv2.imread(image.fullPath())
     webcam = image.webcam()
     height, width  = img.shape[:2]
@@ -71,5 +73,29 @@ for image in [i for i in images if i.webcam().name()=="LSZB"]:
     M = cv2.getPerspectiveTransform(pts1,pts2)
     ground = cv2.warpPerspective(img,M,(width,heightGround))
     cv2.imshow("ground" + repr(image), ground)
+
+    from matplotlib import pyplot as plt
+    color = ('r','g','b')
+    history = {}
+    hsvSky = cv2.cvtColor(sky,cv2.COLOR_BGR2HSV)
+    cv2.imshow("hsvSky" + repr(image), hsvSky)
+
+    for i,col in enumerate(color):
+        #if i != 0 : break
+        print("i = %d" % i)
+        histr = cv2.calcHist([hsvSky],[i],None,[256],[0,256])
+        print(type(histr))
+        print(len(histr))
+        history[col] = histr
+        print(histr)
+        print(np.amax(histr))
+        print(np.nanargmax(histr))
+        #TODO Vincent equart type et moyenne sur histr
+        plt.plot(histr,color = col)
+        plt.xlim([0,256])
+        #for i, val in enumerate(histr):
+        #    print("%d = %d" % (i, val))
+    plt.show()
+
 
 cv2.waitKey()
