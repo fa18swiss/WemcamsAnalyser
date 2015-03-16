@@ -1,3 +1,4 @@
+from Tools import validateType
 try:
     from enum import Enum
 except:
@@ -25,9 +26,6 @@ class State(Enum):
     Sun = 2
     Cloudy = 3
 
-def validateType(value, types, name):
-    if not isinstance(value, types):
-        raise TypeError("%s, %s expected, %s get" % (name, repr(types), type(value)))
 
 #todo jules ajout equart type
 class Characteristic:
