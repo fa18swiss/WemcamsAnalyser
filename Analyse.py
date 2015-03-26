@@ -173,7 +173,8 @@ images = [Image(f) for f in files][:24]
 
 results = []
 
-for image in [i for i in images if i.webcam().name()=="LSGC_east" and i.date().hour == 13]:
+#for image in [i for i in images if i.webcam().name()=="LSGC_east" and i.date().hour == 13]:
+for image in [i for i in images if i.webcam().name()=="LSZQ_west" and i.date().hour == 7]:
     splitter = ImageSplitter(image)
     # img = cv2.imread(image.fullPath())
     # webcam = image.webcam()

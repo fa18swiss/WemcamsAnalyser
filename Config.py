@@ -5,6 +5,7 @@ pathImages = r"E:\\WebcamsImages\\"
 pathsImage = {
     "think-jules": r"E:\\WebcamsImages\\stample",
     "banana-black": r"/home/jules/Webcams/Images",
+    "kamhy-alien": r"E:\GoogleDrive\HE-ARC\3eme\3252_Imagerie_Numerique\3252.2_TraitementDimage\WemcamsAnalyser\Stamples",
 }
 import platform
 if platform.node() in pathsImage:
