@@ -3,19 +3,21 @@ import Config
 from matplotlib import pyplot as plt
 import cv2
 import numpy as np
-from Characteristic import ImagePart, Channel
+from Characteristic import ImagePart, Channel, characteristics
 
 from os.path import join
 
 class Result:
-    def __init__(self, state, image):
+    def __init__(self, state, name, image):
         self.__state = state
         self.__image = image
+        self.__name = name
     def state(self):
         return self.__state
     def image(self):
         return self.__image
-
+    def __repr__(self):
+        return "%s (%s) %s" % (self.__state, self.__name, self.__image)
 
 
 class Image:
@@ -169,12 +171,15 @@ def plotImageColors(splitter, imagePart):
 files = Config.filesInFolder(Config.pathImages, True)
 images = [Image(f) for f in files][:24]
 
-
+def isIn(imageVal, val, dVal):
+    result = abs(imageVal - val) <= dVal
+    print("isIn(%f %f %f) = %s" % (imageVal, val, dVal, result))
+    return result
 
 results = []
 
 #for image in [i for i in images if i.webcam().name()=="LSGC_east" and i.date().hour == 13]:
-for image in [i for i in images if i.webcam().name()=="LSGL_north" and i.date().hour == 07]:
+for image in [i for i in images ]:#if i.webcam().name()=="LSGL_north" and i.date().hour == 07]:
     splitter = ImageSplitter(image)
     # img = cv2.imread(image.fullPath())
     # webcam = image.webcam()
@@ -222,7 +227,7 @@ for image in [i for i in images if i.webcam().name()=="LSGL_north" and i.date().
         print("%s standardDeviation = %s" %(channel, repr(img.standardDeviation(channel))))
 
 
-    plotImageColors(splitter, ImagePart.SKY)
+    #plotImageColors(splitter, ImagePart.SKY)
     #plotImageColors(splitter, ImagePart.GROUND)
 
     # hsvSky = splitter.getImage(ImagePart.SKY).imageHsv()
@@ -243,7 +248,23 @@ for image in [i for i in images if i.webcam().name()=="LSGL_north" and i.date().
     #     #for i, val in enumerate(histr):
     #     #    print("%d = %d" % (i, val))
     # plt.show()
+    added = False
+    for characteristic in characteristics:
+        if not characteristic.mean() is None:
+            if isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.mean(), characteristic.dMean()):
+                results.append(Result(characteristic.state(), characteristic.name(), image))
+                added = True
+                break
+        if not characteristic.standardDeviation() is None:
+            if isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.standardDeviation(), characteristic.dStandardDeviation()):
+                results.append(Result(characteristic.state(), characteristic.name(), image))
+                added = True
+                break
+    if not added:
+        #todo add as error
 
+for result in results:
+    print(result)
 
 cv2.waitKey()
 

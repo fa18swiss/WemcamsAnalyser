@@ -52,6 +52,8 @@ class Characteristic:
         return self.__name
     def channel(self):
         return self.__channel
+    def state(self):
+        return self.__state
     def imagePart(self):
         return self.__imagePart
     def mean(self):
