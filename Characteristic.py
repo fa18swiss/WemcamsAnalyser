@@ -30,7 +30,6 @@ class State(Enum):
     Snow = 6
 
 
-#todo jules ajout equart type
 class Characteristic:
     def __init__(self, name, channel, imagePart, state, mean, dMean, standardDeviation, dStandardDeviation):
         self.__name = name
@@ -64,38 +63,36 @@ class Characteristic:
         return self.__standardDeviation
     def dStandardDeviation(self):
         return self.__dStandardDeviation
-
+#Attention, H : [0, 180]
 characteristics = (
     #LSGC_east 1310
-    Characteristic("Blue", Channel.HSV_H, ImagePart.SKY, State.Sun, 103, 7.0, 8.6, 10),
+    Characteristic("Blue", Channel.HSV_H, ImagePart.SKY, State.Sun, 120, 10, 20, 10),
     #LSGC_west 1310
-    Characteristic("Blue-sun", Channel.HSV_H, ImagePart.SKY, State.Sun, 100, 10, 20, 10),
-    #LSZQ_west 0710 #TODO SHOW TO JULES
-    Characteristic("snow", Channel.HSV_V, ImagePart.SKY, State.Snow, 65, 10, 0, 10),
+    Characteristic("Blue-sun", Channel.HSV_V, ImagePart.SKY, State.Sun, 230, 25, 30, 5),
     #LSPL_east 0850
-    Characteristic("snow", Channel.HSV_H, ImagePart.SKY, State.Snow, 105, 10, 0, 5),
+    Characteristic("snow", Channel.HSV_S, ImagePart.SKY, State.Snow, 5, 5, 2, 2),
     #LSGC_west 0920
     Characteristic("snow-foggy", Channel.HSV_S, ImagePart.SKY, State.Snow, 0, 18, 25, 10),
-    #LSGN_east 0720 TODO Bonne question 5 piques egale
-    Characteristic("cloudy", Channel.HSV_S, ImagePart.SKY, State.Cloudy, 0, 18, 25, 10),
+    #LSGN_east 0720
+    Characteristic("cloudy", Channel.HSV_H, ImagePart.SKY, State.Cloudy, 38, 10, 13, 10),
     #LSZQ_west 0440
-    Characteristic("night", Channel.HSV_V, ImagePart.SKY, State.Night, 2, 5, 0, 1),
-    #LSGC_west 0740
-    Characteristic("cloudy-snow-sun", Channel.HSV_H, ImagePart.SKY, State.Cloudy, 17, 100, 10, 50),
+    Characteristic("Night", Channel.HSV_V, ImagePart.SKY, State.Night, 10, 10, 3, 3),
     #LSGL_south 1350 TODO le soucis vient que lon ne peu pas differencier avec LSGC_west
-    Characteristic("ERROR", Channel.HSV_H, ImagePart.SKY, State.Sun, 17, 100, 4, 5),
+    #Characteristic("ERROR", Channel.HSV_H, ImagePart.SKY, State.Sun, 17, 100, 4, 5),
     #StImier 1320
-    Characteristic("snow-rain", Channel.HSV_V, ImagePart.SKY, State.Rain, 24, 5, 0, 1),
+    Characteristic("snow-rain", Channel.HSV_V, ImagePart.SKY, State.Rain, 188, 10, 13, 2),
+    #part2
     #LSPL_west
-    Characteristic("cloudy", Channel.HSV_H, ImagePart.SKY, State.Cloudy, 80, 20, 5, 10),
+    Characteristic("cloudy", Channel.HSV_H, ImagePart.SKY, State.Cloudy, 56, 4, None, None),
     #LSPL_east
     Characteristic("light-cloudy", Channel.HSV_H, ImagePart.SKY, State.Light_cloudy, 80, 20, 0, 15),
     #LSPL_west
     Characteristic("cloudy", Channel.HSV_H, ImagePart.SKY, State.Cloudy, 90, 20, 0, 15),
     #LSZQ_west
-    Characteristic("sun", Channel.HSV_H, ImagePart.SKY, State.Sun, 95, 10, 0, 1),
+    Characteristic("sun", Channel.HSV_H, ImagePart.SKY, State.Sun, 95, 10, None, None),
     #LSGL_north
-    Characteristic("sun", Channel.HSV_H, ImagePart.SKY, State.Sun, 0, 10, 0, 1),
+    Characteristic("sun", Channel.HSV_H, ImagePart.SKY, State.Sun, 0, 10, None, None),
+
 
 
 

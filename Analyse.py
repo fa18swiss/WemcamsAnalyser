@@ -63,6 +63,7 @@ class HistoImage:
                 imageBase = self.imageHsv()
             else:
                 imageBase = self.__image
+            print("%s %d" % (channel, self.__index[channel]))
             histogram = cv2.calcHist([imageBase],[self.__index[channel]],None,[256],[0,256])
             self.__histograms[channel] = histogram
             return histogram
@@ -76,23 +77,20 @@ class HistoImage:
             colors = self.__rgb
 
         means, standardDeviations = cv2.meanStdDev(imageBase)
-        for i, c in enumerate(colors):
+
+        for c, i in colors.iteritems():
             self.__means[c] = means[i][0]
             self.__standardDeviations[c] = standardDeviations[i][0]
 
     def mean(self, channel):
         validateType(channel, Channel, "channel")
         if not channel in self.__means:
-            #TODO calc mean
-            #self.__means[channel] = np.mean(self.histogram(channel))
             self.__calcMean(channel)
         return self.__means[channel]
     def standardDeviation(self, channel):
         validateType(channel, Channel, "channel")
         if not channel in self.__standardDeviations:
-            #TODO calc standardDeviation
             self.__calcMean(channel)
-            #self.__standardDeviations[channel] = np.std(self.histogram(channel))
         return self.__standardDeviations[channel]
 
 
@@ -124,6 +122,7 @@ class ImageSplitter:
                 M = cv2.getPerspectiveTransform(pts1,pts2)
                 all = HistoImage(cv2.warpPerspective(self.__cv2image,M,(width,bottom -top)))
                 self.__images[imagePart] = all
+                #cv2.imshow("all %s"% (image), all.image())
                 return all
             elif imagePart == ImagePart.SKY:
                 maxSkyHeight = max(skyLeft, skyRight)
@@ -135,6 +134,7 @@ class ImageSplitter:
                 M = cv2.getPerspectiveTransform(pts1,pts2)
                 sky = HistoImage(cv2.warpPerspective(self.__cv2image,M,(width,bottomSky)))
                 self.__images[imagePart] = sky
+                #cv2.imshow("sky %s"% (image), sky.image())
                 return sky
             elif imagePart == ImagePart.GROUND:
                 topGround = min(skyLeft, skyRight)
@@ -146,6 +146,7 @@ class ImageSplitter:
                 M = cv2.getPerspectiveTransform(pts1,pts2)
                 ground = HistoImage(cv2.warpPerspective(self.__cv2image,M,(width,heightGround)))
                 self.__images[imagePart] = ground
+                #cv2.imshow("ground %s"% (image), ground.image())
                 return ground
             raise ValueError("Type %s unknow" % repr(type))
         return self.__images[imagePart]
@@ -169,7 +170,7 @@ def plotImageColors(splitter, imagePart):
     plt.show()
 
 files = Config.filesInFolder(Config.pathImages, True)
-images = [Image(f) for f in files][:24]
+images = [Image(f) for f in files]
 
 def isIn(imageVal, val, dVal):
     result = abs(imageVal - val) <= dVal
@@ -177,94 +178,41 @@ def isIn(imageVal, val, dVal):
     return result
 
 results = []
+unknows = []
 
-#for image in [i for i in images if i.webcam().name()=="LSGC_east" and i.date().hour == 13]:
-for image in [i for i in images ]:#if i.webcam().name()=="LSGL_north" and i.date().hour == 07]:
+for image in images:
+    print(image)
     splitter = ImageSplitter(image)
-    # img = cv2.imread(image.fullPath())
-    # webcam = image.webcam()
-    # height, width  = img.shape[:2]
-    # print("%d x %d" % (height, width))
-    #
-    # cv2.imshow("ori" + repr(image), img)
-    # bottom = webcam.ignoreBottom() if webcam.ignoreBottom() != 0 else height
-    # top = webcam.ignoreTop()
-    # skyLeft = webcam.skyLeft()
-    # skyRight = webcam.skyRight()
-    # maxSkyHeight = max(skyLeft, skyRight)
-    # bottomSky = maxSkyHeight - top
-    # print("top %d, bot %d" %(top, bottom))
-    # print("skyLeft(%d), skyRight(%d), maxSkyHeight(%d)" % (skyLeft, skyRight, maxSkyHeight))
-    # pts1 = np.float32([[0,top],[width,top],[0,skyLeft],[width,skyRight]])
-    # pts2 = np.float32([[0,0],[width,0],[0,bottomSky],[width,bottomSky]])
-    # M = cv2.getPerspectiveTransform(pts1,pts2)
-    # sky = cv2.warpPerspective(img,M,(width,bottomSky))
-    # cv2.imshow("sky" + repr(image), sky)
-    #
-    # topGround = min(skyLeft, skyRight)
-    # bottomGround = bottom
-    # heightGround = bottomGround - topGround
-    # print("topGround(%d), bottomGround(%d), heightGround(%d)" % (topGround, bottomGround, heightGround))
-    # pts1 = np.float32([[0,skyLeft],[width,skyRight],[0,bottomGround],[width,bottomGround]])
-    # pts2 = np.float32([[0,0],[width,0],[0,heightGround],[width,heightGround]])
-    # M = cv2.getPerspectiveTransform(pts1,pts2)
-    # ground = cv2.warpPerspective(img,M,(width,heightGround))
-    # cv2.imshow("ground" + repr(image), ground)
-
-
-    #hsvSky = cv2.cvtColor(sky,cv2.COLOR_BGR2HSV)
-    #cv2.imshow("hsvSky" + repr(image), hsvSky)
-
-
-    # for imagePart in ImagePart:
-    #     img = splitter.getImage(imagePart).image()
-    #     print(repr(img))
-    #     cv2.imshow(repr(imagePart), img)
-
     img = splitter.getImage(ImagePart.SKY)
     for channel in Channel:
         print("%s mean              = %s" %(channel, repr(img.mean(channel))))
         print("%s standardDeviation = %s" %(channel, repr(img.standardDeviation(channel))))
+    plotImageColors(splitter, ImagePart.SKY)
 
-
-    #plotImageColors(splitter, ImagePart.SKY)
-    #plotImageColors(splitter, ImagePart.GROUND)
-
-    # hsvSky = splitter.getImage(ImagePart.SKY).imageHsv()
-    # color = ('r','g','b')
-    # for i, col in enumerate(color):
-    #     #if i != 0 : break
-    #     print("i = %d" % i)
-    #     histr = cv2.calcHist([hsvSky],[i],None,[256],[0,256])
-    #     print(type(histr))
-    #     print(len(histr))
-    #     # history[col] = histr
-    #     print(histr)
-    #     print(np.amax(histr))
-    #     print(np.nanargmax(histr))
-    #     #TODO Vincent equart type et moyenne sur histr
-    #     plt.plot(histr,color = col)
-    #     plt.xlim([0,256])
-    #     #for i, val in enumerate(histr):
-    #     #    print("%d = %d" % (i, val))
-    # plt.show()
     added = False
     for characteristic in characteristics:
-        if not characteristic.mean() is None:
-            if isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.mean(), characteristic.dMean()):
-                results.append(Result(characteristic.state(), characteristic.name(), image))
-                added = True
-                break
-        if not characteristic.standardDeviation() is None:
-            if isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.standardDeviation(), characteristic.dStandardDeviation()):
-                results.append(Result(characteristic.state(), characteristic.name(), image))
-                added = True
-                break
+        mean = None
+        if characteristic.mean() is None:
+            mean = True
+        else:
+            mean = isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.mean(), characteristic.dMean())
+        std = None
+        if characteristic.standardDeviation() is None:
+            std = True
+        else:
+            std = isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.standardDeviation(), characteristic.dStandardDeviation())
+        if mean and std:
+            results.append(Result(characteristic.state(), characteristic.name(), image))
+            added = True
+            break
     if not added:
-        #todo add as error
+        unknows.append(image)
 
 for result in results:
     print(result)
 
-cv2.waitKey()
+ok = len(results)
+tot = ok + len(unknows)
+print("classified %d on %d : %f%%" % (ok, tot, ok / float(tot) * 100))
 
+cv2.waitKey()

@@ -3,7 +3,8 @@ dateFormat = "%Y-%m-%d_%H%M"
 pathImages = r"E:\\WebcamsImages\\"
 # path for hostname
 pathsImage = {
-    "think-jules": r"E:\\WebcamsImages\\stample",
+    "think-jules": r"Stamples\part_1",
+    #"think-jules": r"E:\WebcamsImages\2015-03-10",
     "banana-black": r"/home/jules/Webcams/Images",
     "kamhy-alien": r"E:\GoogleDrive\HE-ARC\3eme\3252_Imagerie_Numerique\3252.2_TraitementDimage\WemcamsAnalyser\Stamples\part_2",
 }
@@ -54,15 +55,15 @@ class Webcam:
 webcams = [
     Webcam("LSGC_east" , "http://www.leseplaturesairport.ch/site/images/stories/webcam/LSGC1.jpg"    , 381, 366,  8),
     Webcam("LSGC_west" , "http://www.leseplaturesairport.ch/site/images/stories/webcam/LSGC3.jpg"    , 276, 287,  8),
-    Webcam("LSGN_east" , "http://www.neuchatel-airport.ch/webcams/lsgn_east.jpg"                     ,   0,   0),
-    Webcam("LSGN_west" , "http://www.neuchatel-airport.ch/webcams/lsgn_west.jpg"                     ,   0,   0),
-    Webcam("LSGL_north", "http://www.lausanne-airport.ch/webcam0/last/webcam002.jpg"                 ,   0,   0),
-    Webcam("LSGL_south", "http://www.lausanne-airport.ch/webcam2/last/webcam000M.jpg"                ,   0,   0),
-    Webcam("LSZQ_west" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/ouest.jpg",   0,   0),
-    Webcam("LSZQ_east" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/est.jpg"  ,   0,   0),
+    Webcam("LSGN_east" , "http://www.neuchatel-airport.ch/webcams/lsgn_east.jpg"                     , 146, 117,  0, 423), #modif
+    Webcam("LSGN_west" , "http://www.neuchatel-airport.ch/webcams/lsgn_west.jpg"                     , 297, 265,  0, 421), #modif
+    Webcam("LSGL_north", "http://www.lausanne-airport.ch/webcam0/last/webcam002.jpg"                 , 133, 125, 24), #modif
+    Webcam("LSGL_south", "http://www.lausanne-airport.ch/webcam2/last/webcam000M.jpg"                ,  93,  93, 18), #modif
+    Webcam("LSZQ_west" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/ouest.jpg", 407, 513, 27), #modif
+    Webcam("LSZQ_east" , "http://www.aerojura.ch/ressourcesannexes/aerojura/photos/capture/est.jpg"  , 323, 296, 27), #modif
     Webcam("LSPL_east" , "http://aecs.lspl.ch/fileadmin/webcams/cam05_large.jpg"                     , 130, 215, 20),
     Webcam("LSPL_west" , "http://aecs.lspl.ch/fileadmin/webcams/cam23_large.jpg"                     , 217, 153, 20),
-    Webcam("LSZB"      , "http://www.flughafenbern.ch/images/webcam/current.jpg"                     , 121, 108,  8, 448),
-    Webcam("LSZJ"      , "http://www.gamcy.ch/MOBOTIX/Courtelary-cam1.jpg"                           ,   0,   0),
-    Webcam("StImier"   , "http://www.chasseral-snow.ch/photo/camerapts0800-5.jpg"                    ,   0,   0),
+    Webcam("LSZB"      , "http://www.flughafenbern.ch/images/webcam/current.jpg"                     ,  58,  90,  8, 448),
+    Webcam("LSZJ"      , "http://www.gamcy.ch/MOBOTIX/Courtelary-cam1.jpg"                           , 102,  80,  7), #modif
+    Webcam("StImier"   , "http://www.chasseral-snow.ch/photo/camerapts0800-5.jpg"                    , 129, 115, 14), #modif
 ]
