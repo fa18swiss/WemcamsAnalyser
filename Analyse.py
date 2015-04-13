@@ -63,7 +63,6 @@ class HistoImage:
                 imageBase = self.imageHsv()
             else:
                 imageBase = self.__image
-            print("%s %d" % (channel, self.__index[channel]))
             histogram = cv2.calcHist([imageBase],[self.__index[channel]],None,[256],[0,256])
             self.__histograms[channel] = histogram
             return histogram
@@ -127,8 +126,8 @@ class ImageSplitter:
             elif imagePart == ImagePart.SKY:
                 maxSkyHeight = max(skyLeft, skyRight)
                 bottomSky = maxSkyHeight - top
-                print("top %d, bot %d" %(top, bottom))
-                print("skyLeft(%d), skyRight(%d), maxSkyHeight(%d)" % (skyLeft, skyRight, maxSkyHeight))
+                #print("top %d, bot %d" %(top, bottom))
+                #print("skyLeft(%d), skyRight(%d), maxSkyHeight(%d)" % (skyLeft, skyRight, maxSkyHeight))
                 pts1 = np.float32([[0,top],[width,top],[0,skyLeft],[width,skyRight]])
                 pts2 = np.float32([[0,0],[width,0],[0,bottomSky],[width,bottomSky]])
                 M = cv2.getPerspectiveTransform(pts1,pts2)
@@ -140,7 +139,7 @@ class ImageSplitter:
                 topGround = min(skyLeft, skyRight)
                 bottomGround = bottom
                 heightGround = bottomGround - topGround
-                print("topGround(%d), bottomGround(%d), heightGround(%d)" % (topGround, bottomGround, heightGround))
+                #print("topGround(%d), bottomGround(%d), heightGround(%d)" % (topGround, bottomGround, heightGround))
                 pts1 = np.float32([[0,skyLeft],[width,skyRight],[0,bottomGround],[width,bottomGround]])
                 pts2 = np.float32([[0,0],[width,0],[0,heightGround],[width,heightGround]])
                 M = cv2.getPerspectiveTransform(pts1,pts2)
@@ -174,20 +173,20 @@ images = [Image(f) for f in files]
 
 def isIn(imageVal, val, dVal):
     result = abs(imageVal - val) <= dVal
-    print("isIn(%f %f %f) = %s" % (imageVal, val, dVal, result))
+    #print("isIn(%f %f %f) = %s" % (imageVal, val, dVal, result))
     return result
 
 results = []
 unknows = []
 
-for image in images:
+for image in images[:24]:
     print(image)
     splitter = ImageSplitter(image)
     img = splitter.getImage(ImagePart.SKY)
     for channel in Channel:
         print("%s mean              = %s" %(channel, repr(img.mean(channel))))
         print("%s standardDeviation = %s" %(channel, repr(img.standardDeviation(channel))))
-    plotImageColors(splitter, ImagePart.SKY)
+    #plotImageColors(splitter, ImagePart.SKY)
 
     added = False
     for characteristic in characteristics:
@@ -200,7 +199,7 @@ for image in images:
         if characteristic.standardDeviation() is None:
             std = True
         else:
-            std = isIn(splitter.getImage(characteristic.imagePart()).mean(characteristic.channel()), characteristic.standardDeviation(), characteristic.dStandardDeviation())
+            std = isIn(splitter.getImage(characteristic.imagePart()).standardDeviation(characteristic.channel()), characteristic.standardDeviation(), characteristic.dStandardDeviation())
         if mean and std:
             results.append(Result(characteristic.state(), characteristic.name(), image))
             added = True
@@ -210,6 +209,9 @@ for image in images:
 
 for result in results:
     print(result)
+print("##### unknows")
+for unknow in unknows:
+    print(unknow)
 
 ok = len(results)
 tot = ok + len(unknows)
