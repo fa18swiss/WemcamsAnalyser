@@ -68,7 +68,7 @@ characteristics = (
 
     Characteristic("Blue", Channel.HSV_H, ImagePart.SKY, State.Sun, 120, 25, 12, 12),
 
-    Characteristic("Light-sun", Channel.HSV_V, ImagePart.SKY, State.Sun, 248, 7, 10, 10),
+    Characteristic("Light-sun", Channel.HSV_V, ImagePart.SKY, State.Sun, 238, 17, 20, 20),
 
     Characteristic("claudy", Channel.HSV_S, ImagePart.SKY, State.Cloudy, 1, 1, 1, 1),
 
