@@ -1,6 +1,6 @@
 dateFormat = "%Y-%m-%d_%H%M"
 #default path
-pathImages = r"E:\\WebcamsImages\\"
+pathImages = r"Stamples\part_1"
 # path for hostname
 pathsImage = {
     "think-jules": r"Stamples\part_1",
