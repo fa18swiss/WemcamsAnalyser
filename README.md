@@ -12,7 +12,8 @@ WebcamAlanyzer analyse the weather of an image and classify it :
 - Python 2.7
 - [Enum 3.4](https://pypi.python.org/pypi/enum34)
 - [OpenCV 3.0](http://opencv.org/downloads.html)
-- Nunpy
+- [NumPy](http://www.scipy.org/scipylib/download.html)
+- [matplotlib](http://matplotlib.org/downloads.html)
 
 # Usage
 
